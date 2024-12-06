@@ -1,1 +1,3 @@
 gh-open
+releases/*
+!releases/.gitkeep
