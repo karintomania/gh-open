@@ -10,7 +10,7 @@ import (
 	"runtime"
 )
 
-var version string = "0.1.1"
+const version = "0.1.1"
 
 var isPR bool
 var isVersion bool
@@ -19,7 +19,7 @@ func main() {
 	getFlags()
 
 	if isVersion {
-        fmt.Printf("gh-open v%s\n", version);
+		fmt.Printf("gh-open v%s\n", version)
 		return
 	}
 
@@ -38,7 +38,7 @@ func main() {
 func getFlags() {
 	flag.BoolVar(&isPR, "PR", false, "Open PR page")
 	flag.BoolVar(&isPR, "p", false, "Alias for -PR")
-    flag.BoolVar(&isVersion, "version", false, "Show version of gh-open")
+	flag.BoolVar(&isVersion, "version", false, "Show version of gh-open")
 
 	flag.Parse()
 }
