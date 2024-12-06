@@ -11,7 +11,8 @@ VERSION=$(shell grep "const version" main.go | sed -E 's/const version = "(.*)"/
 print-version:
 	@echo $(VERSION)
 
-build-all: windows macos macos-arm64 linux
+build-all: 
+	$(MAKE) -j4 windows macos macos-arm64 linux
 
 windows: $(OUTPUT_DIR)
 	@echo "Compiling for Windows (x86_64)..."
