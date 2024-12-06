@@ -4,6 +4,7 @@ OUTPUT_DIR=releases
 # Go source file
 SOURCE_FILE=main.go
 
+# Get the version from the source file
 VERSION=$(shell grep "const version" main.go | sed -E 's/const version = "(.*)"/\1/')
 
 .PHONY: build-all windows macos macos-arm64 linux clean print-version
