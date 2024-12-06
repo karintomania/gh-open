@@ -4,37 +4,55 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"runtime"
 )
 
 func main() {
-    url := getRepoUrl()
-    err := openBrowser(url)
+    url, err := getRepoUrl()
+    if err != nil {
+        fmt.Printf("Error %v\n", err)
+        return
+    }
+
+    fmt.Printf("url: %s\n", url)
+
+    err = openBrowser(url)
     if err != nil {
         fmt.Printf("Error %v\n", err)
     }
 }
 
-func getRepoUrl() string {
+func getRepoUrl() (string, error) {
     cwd, err := os.Getwd()
     if err != nil {
-        fmt.Errorf("Failed to get current working directory: %v", err)
+        return "", fmt.Errorf("Failed to get current working directory: %v", err)
     }
 
     fmt.Printf("cwd: %s\n", cwd)
 
-    cmd := exec.Command("git", "status")
+    args := []string{"config", "--get", "remote.origin.url"}
+
+    cmd := exec.Command("git", args...)
 
     cmd.Dir = cwd
 
     output, err := cmd.CombinedOutput()
     if err != nil {
-        fmt.Errorf("Failed to run git command: %v", err)
+        return "", fmt.Errorf("Failed to run git command: %v", err)
     }
 
-    // Print the output
-    fmt.Printf("Git command output:\n%s\n", output)
-    return string(output)
+    httpUrl := getHttpUrl(string(output))
+
+    return httpUrl, nil
+}
+
+func getHttpUrl(url string) string {
+    re := regexp.MustCompile(`git@github\..*?:`)
+
+    result := re.ReplaceAllString(url, "https://github.com/")
+
+    return result
 }
 
 func openBrowser(url string) error {
