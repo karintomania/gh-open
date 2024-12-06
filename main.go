@@ -10,7 +10,7 @@ import (
 	"runtime"
 )
 
-var version string = "0.1.0"
+var version string = "0.1.1"
 
 var isPR bool
 var isVersion bool
@@ -71,7 +71,7 @@ func getRepoUrl() (string, error) {
 	}
 
 	if len(output) == 0 {
-		return "", fmt.Errorf("No the remote repository found")
+		return "", fmt.Errorf("No URL for the remote repository found")
 	}
 
 	httpUrl := getHttpUrl(string(output))
