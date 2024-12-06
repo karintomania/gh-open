@@ -32,4 +32,5 @@ linux: $(OUTPUT_DIR)
 
 clean:
 	@echo "Cleaning up binaries..."
-	rm -rf $(OUTPUT_DIR)
+	rm -rf $(OUTPUT_DIR)/*
+	touch $(OUTPUT_DIR)/.gitkeep
